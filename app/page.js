@@ -7,7 +7,6 @@ import Process from "@/components/Process";
 import WhyUs from "@/components/WhyUs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import ChatBot from "@/components/ChatBot";
 import { nav as allNav } from "@/lib/content";
 import { getContent } from "@/lib/cms";
 
@@ -31,7 +30,7 @@ export default async function Home() {
         <Contact services={services} />
       </main>
       <Footer nav={nav} services={services} />
-      <ChatBot />
+      {/* ChatBot disembunyikan sementara: butuh ANTHROPIC_API_KEY (API berbayar). Aktifkan lagi dengan import + <ChatBot />. */}
     </>
   );
 }
