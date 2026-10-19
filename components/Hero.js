@@ -1,7 +1,7 @@
 import Photo from "./Photo";
-import { images, services } from "@/lib/content";
+import { images } from "@/lib/content";
 
-export default function Hero() {
+export default function Hero({ services }) {
   return (
     <section id="beranda" className="hero" aria-labelledby="hero-title">
       <div className="hero-content">

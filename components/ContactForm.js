@@ -1,15 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import { services } from "@/lib/content";
+import { useRef, useState } from "react";
+import { LIMITS } from "@/lib/inquiry";
 
-// shortcut: formulir belum mengirim data ke mana pun; sambungkan ke API route/email saat backend tersedia.
-export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+const messages = {
+  idle: "Kami akan menghubungi Anda melalui kontak yang Anda isi.",
+  sending: "Mengirim permintaan…",
+  sent: "Terima kasih. Permintaan Anda sudah kami terima dan tim kami akan segera menghubungi Anda.",
+};
 
-  const onSubmit = (e) => {
+export default function ContactForm({ services }) {
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
+  const startedAt = useRef(Date.now());
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    const form = e.currentTarget;
+    setStatus("sending");
+    setError("");
+    try {
+      const res = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), startedAt: startedAt.current }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error);
+      form.reset();
+      setStatus("sent");
+    } catch (err) {
+      setError(err.message || "Gagal mengirim formulir. Periksa koneksi Anda lalu coba lagi.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -19,17 +42,17 @@ export default function ContactForm() {
       <div className="field-row">
         <div className="field">
           <label htmlFor="f-nama">Nama</label>
-          <input id="f-nama" name="nama" autoComplete="name" required />
+          <input id="f-nama" name="nama" autoComplete="name" maxLength={LIMITS.nama} required />
         </div>
         <div className="field">
           <label htmlFor="f-perusahaan">Nama perusahaan</label>
-          <input id="f-perusahaan" name="perusahaan" autoComplete="organization" required />
+          <input id="f-perusahaan" name="perusahaan" autoComplete="organization" maxLength={LIMITS.perusahaan} required />
         </div>
       </div>
 
       <div className="field">
         <label htmlFor="f-kontak">Email atau nomor telepon</label>
-        <input id="f-kontak" name="kontak" autoComplete="email" required />
+        <input id="f-kontak" name="kontak" autoComplete="email" minLength={3} maxLength={LIMITS.kontak} required />
       </div>
 
       <div className="field">
@@ -43,15 +66,21 @@ export default function ContactForm() {
 
       <div className="field">
         <label htmlFor="f-deskripsi">Deskripsi kebutuhan</label>
-        <textarea id="f-deskripsi" name="deskripsi" rows={4} placeholder="Contoh: lokasi, jumlah tenaga kerja, perkiraan jadwal" required />
+        <textarea id="f-deskripsi" name="deskripsi" rows={4} maxLength={LIMITS.deskripsi} placeholder="Contoh: lokasi, jumlah tenaga kerja, perkiraan jadwal" required />
       </div>
 
-      <button type="submit" className="btn btn-navy">Kirim Permintaan</button>
+      {/* Honeypot anti-spam: tersembunyi dari pengunjung dan pembaca layar, biasanya diisi oleh bot. */}
+      <div className="hp" aria-hidden="true">
+        <label htmlFor="f-website">Website</label>
+        <input id="f-website" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
 
-      <p className="form-note" role="status">
-        {submitted
-          ? "Terima kasih. Formulir ini belum terhubung ke sistem sehingga data belum terkirim — silakan hubungi kami melalui kontak di samping."
-          : "Formulir masih dalam tahap pengembangan; data belum dikirim ke sistem."}
+      <button type="submit" className="btn btn-navy" disabled={status === "sending"}>
+        {status === "sending" ? "Mengirim…" : "Kirim Permintaan"}
+      </button>
+
+      <p className="form-note" role={status === "error" ? "alert" : "status"}>
+        {status === "error" ? error : messages[status]}
       </p>
     </form>
   );

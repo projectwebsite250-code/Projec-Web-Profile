@@ -1,9 +1,8 @@
 import Photo from "./Photo";
 import Reveal from "./Reveal";
 import { Arrow, ServiceIcon } from "./Icons";
-import { services } from "@/lib/content";
 
-export default function Services() {
+export default function Services({ services }) {
   return (
     <section id="layanan" className="section" aria-labelledby="services-title">
       <div className="container">

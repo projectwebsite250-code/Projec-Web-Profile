@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { brand, contact, nav, services } from "@/lib/content";
+import { brand, contact } from "@/lib/content";
 
-export default function Footer() {
+export default function Footer({ nav, services }) {
   return (
     <footer className="footer">
       <div className="container footer-grid">

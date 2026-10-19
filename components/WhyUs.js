@@ -6,7 +6,7 @@ export default function WhyUs() {
     <section className="section" aria-labelledby="why-title">
       <div className="container why">
         <div className="why-head">
-          <p className="eyebrow"><span>05</span>Mengapa Kami</p>
+          <p className="eyebrow"><span>06</span>Mengapa Kami</p>
           <h2 id="why-title" className="display">
             Dikerjakan dengan cara yang <em>bisa Anda ikuti.</em>
           </h2>

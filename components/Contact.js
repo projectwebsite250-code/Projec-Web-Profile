@@ -2,12 +2,12 @@ import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
 import { contact } from "@/lib/content";
 
-export default function Contact() {
+export default function Contact({ services }) {
   return (
     <section id="kontak" className="section section-navy" aria-labelledby="contact-title">
       <div className="container">
         <Reveal className="cta">
-          <p className="eyebrow eyebrow-light"><span>06</span>Kontak</p>
+          <p className="eyebrow eyebrow-light"><span>07</span>Kontak</p>
           <h2 id="contact-title" className="display">
             Diskusikan Kebutuhan
             <br />
@@ -32,7 +32,7 @@ export default function Contact() {
             </dl>
           </div>
 
-          <ContactForm />
+          <ContactForm services={services} />
         </div>
       </div>
     </section>

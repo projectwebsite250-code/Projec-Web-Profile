@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { brand, nav } from "@/lib/content";
+import { brand } from "@/lib/content";
 
-export default function Navbar() {
+export default function Navbar({ nav }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("beranda");
@@ -28,7 +28,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
     };
-  }, []);
+  }, [nav]);
 
   useEffect(() => {
     if (!open) return;
