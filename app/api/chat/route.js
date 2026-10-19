@@ -1,4 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { brand, services, process as steps, contact } from "@/lib/content";
 import { isValidHistory } from "@/lib/chat";
 
@@ -19,8 +19,8 @@ ${steps.map((s, i) => `${i + 1}. ${s.title}: ${s.text}`).join("\n")}
 Kontak:
 ${contact.map((c) => `- ${c.label}: ${c.value}`).join("\n")}`;
 
-const fallbackText = "Maaf, saya tidak bisa membantu pertanyaan itu. Silakan hubungi tim kami melalui formulir kontak.";
 const errorText = "Maaf, terjadi gangguan. Silakan coba lagi atau hubungi kami melalui formulir kontak.";
+const busyText = "Maaf, asisten sedang ramai. Silakan coba lagi sebentar lagi atau hubungi kami melalui formulir kontak.";
 
 // shortcut: belum ada rate limit per pengunjung; tambahkan (mis. Upstash/Vercel KV) sebelum trafik publik besar.
 export async function POST(req) {
@@ -28,37 +28,46 @@ export async function POST(req) {
   if (!isValidHistory(body?.messages)) {
     return Response.json({ error: "Format percakapan tidak valid." }, { status: 400 });
   }
+  if (!process.env.NVIDIA_API_KEY) {
+    console.error("[api/chat] NVIDIA_API_KEY belum diset");
+    return new Response(null, { status: 503 });
+  }
   const messages = body.messages.map(({ role, content }) => ({ role, content }));
+  const client = new OpenAI({
+    apiKey: process.env.NVIDIA_API_KEY,
+    baseURL: "https://integrate.api.nvidia.com/v1",
+    timeout: 30_000,
+    maxRetries: 1,
+  });
 
   const encoder = new TextEncoder();
-  let stream;
+  const abort = new AbortController();
   const output = new ReadableStream({
     async start(controller) {
       try {
-        stream = new Anthropic().beta.messages.stream({
-          model: "claude-opus-5-5",
-          max_tokens: 2048,
-          output_config: { effort: "low" },
-          betas: ["server-side-fallback-2026-07-01"],
-          fallbacks: "default",
-          system,
-          messages,
-        });
-        for await (const event of stream) {
-          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-            controller.enqueue(encoder.encode(event.delta.text));
-          }
+        const stream = await client.chat.completions.create(
+          {
+            model: "openai/gpt-oss-20b",
+            max_tokens: 2048,
+            stream: true,
+            messages: [{ role: "system", content: system }, ...messages],
+          },
+          { signal: abort.signal },
+        );
+        // Hanya `content`; `reasoning_content` (proses berpikir model) tidak dikirim ke pengunjung.
+        for await (const chunk of stream) {
+          const text = chunk.choices[0]?.delta?.content;
+          if (text) controller.enqueue(encoder.encode(text));
         }
-        const final = await stream.finalMessage();
-        if (final.stop_reason === "refusal") controller.enqueue(encoder.encode(fallbackText));
       } catch (err) {
-        console.error("[api/chat]", err);
-        controller.enqueue(encoder.encode(errorText));
+        // Hanya status/nama error; objek error lengkap bisa memuat header permintaan.
+        console.error("[api/chat]", err?.status ?? err?.name);
+        controller.enqueue(encoder.encode(err?.status === 429 ? busyText : errorText));
       }
       controller.close();
     },
     cancel() {
-      stream?.abort();
+      abort.abort();
     },
   });
 
