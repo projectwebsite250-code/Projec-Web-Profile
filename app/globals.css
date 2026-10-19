@@ -376,7 +376,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .chat-sub { font-size: 0.75rem; color: var(--on-dark); }
 .chat-close { width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--white); font-size: 1.5rem; cursor: pointer; }
 .chat-close:hover { background: rgba(255, 255, 255, 0.1); }
-.chat-log { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 20px; overflow-y: auto; background: var(--off); }
+.chat-head, .chat-form, .chat-note { flex-shrink: 0; }
+.chat-log { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; padding: 20px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; background: var(--off); }
 .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9375rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
 .chat-assistant { align-self: flex-start; background: var(--white); color: var(--navy); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
 .chat-user { align-self: flex-end; background: var(--navy); color: var(--white); border-bottom-right-radius: 4px; }
@@ -446,6 +447,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .facts div { grid-template-columns: 1fr; gap: 4px; }
   .why-list li { grid-template-columns: 1fr; gap: 12px; }
   .footer-grid { grid-template-columns: 1fr; }
+  /* Panel terbuka mengisi area terlihat (di atas keyboard); tombol tutup ada di header. */
+  .chat-open { top: var(--vv-top, 0px); bottom: auto; left: 0; right: 0; height: var(--vv-h, 100dvh); padding: 16px; }
+  .chat-open .chat-panel { flex: 1; width: 100%; height: auto; min-height: 0; }
+  .chat-open .chat-toggle { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

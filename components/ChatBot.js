@@ -17,6 +17,7 @@ export default function ChatBot() {
   const [busy, setBusy] = useState(false);
   const logRef = useRef(null);
   const inputRef = useRef(null);
+  const chatRef = useRef(null);
 
   useEffect(() => {
     logRef.current?.scrollTo(0, logRef.current.scrollHeight);
@@ -28,6 +29,29 @@ export default function ChatBot() {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // iOS Safari tidak mengecilkan layout viewport (atau 100dvh) saat keyboard muncul,
+  // jadi panel di mobile mengikuti area yang benar-benar terlihat lewat visualViewport.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    const el = chatRef.current;
+    if (!open || !vv || !el) return;
+    const place = () => {
+      el.style.setProperty("--vv-top", `${vv.offsetTop}px`);
+      el.style.setProperty("--vv-h", `${vv.height}px`);
+    };
+    const fit = () => {
+      place();
+      logRef.current?.scrollTo(0, logRef.current.scrollHeight);
+    };
+    fit();
+    vv.addEventListener("resize", fit);
+    vv.addEventListener("scroll", place);
+    return () => {
+      vv.removeEventListener("resize", fit);
+      vv.removeEventListener("scroll", place);
+    };
   }, [open]);
 
   const send = async (e) => {
@@ -65,7 +89,7 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="chat">
+    <div ref={chatRef} className={open ? "chat chat-open" : "chat"}>
       {open && (
         <section id="chat-panel" className="chat-panel" role="dialog" aria-label={`Chat dengan ${brand.name}`}>
           <header className="chat-head">
