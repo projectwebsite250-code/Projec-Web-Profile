@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { brand } from "@/lib/content";
 
 export default function Navbar({ nav }) {
@@ -49,25 +50,25 @@ export default function Navbar({ nav }) {
   return (
     <header className={`site-header${scrolled ? " is-scrolled" : ""}${open ? " is-open" : ""}`}>
       <div className="container nav-bar">
-        <a href="#beranda" className="wordmark" onClick={close}>
+        <Link href="/#beranda" className="wordmark" onClick={close}>
           <Image src="/images/logo.png" alt="" width={52} height={72} priority />
           <div>
             {brand.name}
             <span>{brand.tagline}</span>
           </div>
-        </a>
+        </Link>
 
         <nav aria-label="Navigasi utama" className="nav-desktop">
           <ul>
-            {nav.map(({ id, label }) => (
+            {nav.map(({ id, label, href }) => (
               <li key={id}>
-                <a href={`#${id}`} aria-current={active === id ? "true" : undefined}>{label}</a>
+                <Link href={href ?? `/#${id}`} aria-current={active === id ? "true" : undefined}>{label}</Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <a href="#kontak" className="btn btn-nav">Konsultasi</a>
+        <Link href="/#kontak" className="btn btn-nav">Konsultasi</Link>
 
         <button
           type="button"
@@ -83,15 +84,15 @@ export default function Navbar({ nav }) {
 
       <nav id="menu-mobile" aria-label="Navigasi mobile" className="nav-mobile" hidden={!open}>
         <ul>
-          {nav.map(({ id, label }, i) => (
+          {nav.map(({ id, label, href }, i) => (
             <li key={id}>
-              <a href={`#${id}`} onClick={close} aria-current={active === id ? "true" : undefined}>
+              <Link href={href ?? `/#${id}`} onClick={close} aria-current={active === id ? "true" : undefined}>
                 <span>{String(i + 1).padStart(2, "0")}</span>{label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
-        <a href="#kontak" className="btn btn-gold" onClick={close}>Konsultasi</a>
+        <Link href="/#kontak" className="btn btn-gold" onClick={close}>Konsultasi</Link>
       </nav>
     </header>
   );

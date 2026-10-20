@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { brand } from "@/lib/content";
+import { brand, contactHint } from "@/lib/content";
 import { MAX_MESSAGES, MAX_USER_CHARS } from "@/lib/chat";
 
 const greeting = {
   role: "assistant",
   content: `Halo! Saya asisten virtual ${brand.name}. Ada yang bisa saya bantu terkait kebutuhan tenaga kerja Anda?`,
 };
-const errorText = "Maaf, chat sedang tidak tersedia. Silakan hubungi kami melalui formulir kontak.";
+const errorText = `Maaf, chat sedang tidak tersedia. Silakan hubungi kami melalui ${contactHint}.`;
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
@@ -119,7 +119,7 @@ export default function ChatBot() {
             />
             <button type="submit" className="btn btn-navy" disabled={busy || !input.trim()}>Kirim</button>
           </form>
-          <p className="chat-note">Dijawab otomatis oleh AI. Untuk penawaran resmi, gunakan formulir kontak.</p>
+          <p className="chat-note">Dijawab otomatis oleh AI. Untuk penawaran resmi, gunakan {contactHint}.</p>
         </section>
       )}
 

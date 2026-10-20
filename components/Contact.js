@@ -1,6 +1,6 @@
 import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
-import { contact } from "@/lib/content";
+import { contact, whatsapp } from "@/lib/content";
 
 export default function Contact({ services }) {
   return (
@@ -22,17 +22,19 @@ export default function Contact({ services }) {
               Sampaikan kebutuhan Anda melalui formulir atau kanal kontak di bawah. Tim kami akan menindaklanjuti untuk
               membahas detailnya.
             </p>
-            <dl>
-              {contact.map((c) => (
-                <div key={c.label}>
-                  <dt>{c.label}</dt>
-                  <dd className="placeholder">{c.value}</dd>
-                </div>
-              ))}
-            </dl>
+            {contact.length > 0 && (
+              <dl>
+                {contact.map((c) => (
+                  <div key={c.label}>
+                    <dt>{c.label}</dt>
+                    <dd>{c.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
           </div>
 
-          <ContactForm services={services} />
+          <ContactForm services={services} whatsapp={whatsapp} />
         </div>
       </div>
     </section>

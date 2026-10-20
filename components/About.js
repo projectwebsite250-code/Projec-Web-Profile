@@ -1,7 +1,7 @@
 import Photo from "./Photo";
 import Reveal from "./Reveal";
 import { Arrow } from "./Icons";
-import { images } from "@/lib/content";
+import { images, profile } from "@/lib/content";
 
 export default function About() {
   return (
@@ -26,20 +26,16 @@ export default function About() {
               berjalan sesuai kesepakatan.
             </p>
 
-            <dl className="facts">
-              <div>
-                <dt>Visi</dt>
-                <dd className="placeholder">[Visi perusahaan akan dilengkapi]</dd>
-              </div>
-              <div>
-                <dt>Misi</dt>
-                <dd className="placeholder">[Misi perusahaan akan dilengkapi]</dd>
-              </div>
-              <div>
-                <dt>Legalitas</dt>
-                <dd className="placeholder">[Informasi badan usaha & perizinan]</dd>
-              </div>
-            </dl>
+            {profile.length > 0 && (
+              <dl className="facts">
+                {profile.map((p) => (
+                  <div key={p.label}>
+                    <dt>{p.label}</dt>
+                    <dd>{p.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
 
             <a href="#proses" className="text-link">
               Lihat cara kami bekerja <Arrow />

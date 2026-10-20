@@ -1,12 +1,12 @@
 import OpenAI from "openai";
-import { brand, services, process as steps, contact } from "@/lib/content";
+import { brand, services, process as steps, contact, contactHint } from "@/lib/content";
 import { isValidHistory } from "@/lib/chat";
 
 const system = `Anda adalah asisten virtual di website ${brand.name}, perusahaan penyedia tenaga kerja.
 Jawab dalam bahasa Indonesia yang sopan, singkat, dan jelas (maksimal 3 paragraf pendek).
 Hanya bahas perusahaan, layanannya, dan kebutuhan tenaga kerja calon klien. Untuk topik lain, tolak dengan sopan.
-Jangan mengarang harga, jumlah tenaga kerja, legalitas, atau janji yang tidak tercantum di bawah. Jika ditanya hal itu, arahkan ke tim lewat formulir kontak di halaman ini.
-Nilai dalam [kurung siku] belum tersedia, jadi jangan menyebutkannya.
+Jangan mengarang harga, jumlah tenaga kerja, legalitas, atau janji yang tidak tercantum di bawah. Jika ditanya hal itu, arahkan ke tim lewat ${contactHint}.
+Informasi perusahaan yang tidak tercantum di bawah (mis. alamat, email, visi, misi) belum tersedia; katakan belum tersedia, jangan mengarang.
 
 Tentang perusahaan: ${brand.summary}
 
@@ -19,8 +19,8 @@ ${steps.map((s, i) => `${i + 1}. ${s.title}: ${s.text}`).join("\n")}
 Kontak:
 ${contact.map((c) => `- ${c.label}: ${c.value}`).join("\n")}`;
 
-const errorText = "Maaf, terjadi gangguan. Silakan coba lagi atau hubungi kami melalui formulir kontak.";
-const busyText = "Maaf, asisten sedang ramai. Silakan coba lagi sebentar lagi atau hubungi kami melalui formulir kontak.";
+const errorText = `Maaf, terjadi gangguan. Silakan coba lagi atau hubungi kami melalui ${contactHint}.`;
+const busyText = `Maaf, asisten sedang ramai. Silakan coba lagi sebentar lagi atau hubungi kami melalui ${contactHint}.`;
 
 // shortcut: belum ada rate limit per pengunjung; tambahkan (mis. Upstash/Vercel KV) sebelum trafik publik besar.
 export async function POST(req) {

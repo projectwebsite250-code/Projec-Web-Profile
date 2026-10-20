@@ -8,14 +8,9 @@ import WhyUs from "@/components/WhyUs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ChatBot from "@/components/ChatBot";
-import { nav as allNav } from "@/lib/content";
-import { getContent } from "@/lib/cms";
+import { nav as allNav, services, projects } from "@/lib/content";
 
-// Cadangan jika webhook revalidasi gagal; perubahan normal langsung tampil lewat /api/revalidate.
-export const revalidate = 300;
-
-export default async function Home() {
-  const { services, projects } = await getContent();
+export default function Home() {
   const nav = projects.length ? allNav : allNav.filter((n) => n.id !== "portofolio");
 
   return (

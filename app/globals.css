@@ -89,7 +89,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .eyebrow-light { color: var(--white); }
 .eyebrow-light span { color: var(--on-dark); }
 
-.placeholder { color: inherit; opacity: 0.75; font-style: italic; }
 
 /* ==========================================================
    Buttons & links
@@ -196,6 +195,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .hero-media { position: relative; min-height: 360px; background: var(--navy-2); }
 .hero-media .photo { position: absolute; inset: 0; }
+/* Header transparan menimpa bagian atas foto: gradasi navy menjaga teks menu tetap terbaca */
+.hero-media::after { content: ""; position: absolute; inset: 0 0 auto; height: calc(var(--header-h) + 64px); background: linear-gradient(rgb(16 29 50 / 0.7), transparent); pointer-events: none; }
 .hero-caption {
   position: absolute; left: 0; bottom: 0; z-index: 1; padding: 14px 20px;
   background: var(--navy); color: var(--on-dark); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
@@ -284,6 +285,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .service-borongan .text-link { color: var(--white); }
 
 .service-cleaning { grid-column: span 12; }
+/* Kartu selebar 12 kolom: rasio 4:3 bawaan membuat foto setinggi ~900px */
+.service-cleaning .service-media .photo { aspect-ratio: 21 / 9; }
 
 .service-tetap { grid-column: span 7; flex-direction: row; gap: 32px; padding-top: 0; border: 0; }
 .service-tetap .service-media { flex: 0 0 46%; }
@@ -300,7 +303,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .project-client { font-size: 0.875rem; font-weight: 600; }
 .project > p:last-child { font-size: 0.9375rem; }
 
-&
+/* Process */
 .timeline { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
 .timeline::before, .timeline::after { content: ""; position: absolute; top: 20px; left: 0; height: 1px; }
 .timeline::before { right: 0; background: var(--line-dark); }
@@ -351,7 +354,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .form .btn { align-self: flex-start; }
 .form-note { font-size: 0.8125rem; }
 .form .btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* Footer */
 .footer { background: var(--dark); color: var(--on-dark); padding: clamp(56px, 7vw, 96px) 0 32px; }
@@ -417,6 +419,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .hero { grid-template-columns: 1fr; min-height: 0; }
   .hero-content { padding: calc(var(--header-h) + 56px) var(--gutter) 40px; gap: 48px; }
   .hero-media { min-height: 0; aspect-ratio: 4 / 3; }
+  .hero-media::after { display: none; }
 
   .section-head, .split, .why, .contact { grid-template-columns: 1fr; }
   .split-body { padding-top: 0; }
@@ -426,7 +429,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
   .service, .service-driver, .service-security, .service-cleaning, .service-borongan, .service-tetap { grid-column: auto; margin-top: 0; }
   .services { grid-template-columns: 1fr; gap: 56px; }
-  .service-security .service-media .photo { aspect-ratio: 4 / 3; }
+  .service-security .service-media .photo, .service-cleaning .service-media .photo { aspect-ratio: 4 / 3; }
 
   /* Timeline vertikal */
   .timeline { grid-template-columns: 1fr; gap: 40px; }

@@ -1,38 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { LIMITS } from "@/lib/inquiry";
+import { useState } from "react";
+import { LIMITS, waLink } from "@/lib/inquiry";
 
 const messages = {
-  idle: "Kami akan menghubungi Anda melalui kontak yang Anda isi.",
-  sending: "Mengirim permintaan…",
-  sent: "Terima kasih. Permintaan Anda sudah kami terima dan tim kami akan segera menghubungi Anda.",
+  idle: "Tombol kirim membuka WhatsApp dengan pesan berisi isian Anda.",
+  sent: "WhatsApp sudah dibuka. Tekan kirim di WhatsApp untuk menyampaikan permintaan Anda.",
+  empty: "Semua kolom wajib diisi.",
+  off: "Formulir belum aktif karena nomor WhatsApp perusahaan belum tersedia.",
 };
 
-export default function ContactForm({ services }) {
-  const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
-  const startedAt = useRef(Date.now());
+export default function ContactForm({ services, whatsapp }) {
+  const [status, setStatus] = useState(whatsapp ? "idle" : "off");
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    setStatus("sending");
-    setError("");
-    try {
-      const res = await fetch("/api/inquiries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), startedAt: startedAt.current }),
-      });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(json.error);
-      form.reset();
-      setStatus("sent");
-    } catch (err) {
-      setError(err.message || "Gagal mengirim formulir. Periksa koneksi Anda lalu coba lagi.");
-      setStatus("error");
-    }
+    const fields = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, v.trim()]));
+    if (Object.values(fields).some((v) => !v)) return setStatus("empty");
+    fields.jenis = form.elements.jenis.selectedOptions[0].text;
+    // Dibuka langsung dari event submit agar tidak diblokir sebagai pop-up.
+    window.open(waLink(whatsapp, fields), "_blank", "noopener");
+    setStatus("sent");
   };
 
   return (
@@ -69,18 +58,12 @@ export default function ContactForm({ services }) {
         <textarea id="f-deskripsi" name="deskripsi" rows={4} maxLength={LIMITS.deskripsi} placeholder="Contoh: lokasi, jumlah tenaga kerja, perkiraan jadwal" required />
       </div>
 
-      {/* Honeypot anti-spam: tersembunyi dari pengunjung dan pembaca layar, biasanya diisi oleh bot. */}
-      <div className="hp" aria-hidden="true">
-        <label htmlFor="f-website">Website</label>
-        <input id="f-website" name="website" tabIndex={-1} autoComplete="off" />
-      </div>
-
-      <button type="submit" className="btn btn-navy" disabled={status === "sending"}>
-        {status === "sending" ? "Mengirim…" : "Kirim Permintaan"}
+      <button type="submit" className="btn btn-navy" disabled={!whatsapp}>
+        Kirim lewat WhatsApp
       </button>
 
-      <p className="form-note" role={status === "error" ? "alert" : "status"}>
-        {status === "error" ? error : messages[status]}
+      <p className="form-note" role={status === "empty" ? "alert" : "status"}>
+        {messages[status]}
       </p>
     </form>
   );
