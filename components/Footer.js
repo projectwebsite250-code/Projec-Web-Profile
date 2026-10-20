@@ -20,7 +20,7 @@ export default function Footer({ nav, services }) {
         <nav aria-label="Navigasi footer">
           <h2 className="footer-title">Navigasi</h2>
           <ul>
-            {nav.map(({ id, label, href }) => <li key={id}><Link href={href ?? `/#${id}`}>{label}</Link></li>)}
+            {nav.map(({ id, label }) => <li key={id}><Link href={`/#${id}`}>{label}</Link></li>)}
           </ul>
         </nav>
 

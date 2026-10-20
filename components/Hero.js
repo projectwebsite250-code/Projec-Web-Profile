@@ -1,5 +1,5 @@
 import Photo from "./Photo";
-import { images } from "@/lib/content";
+import { brand, images } from "@/lib/content";
 
 export default function Hero({ services }) {
   return (
@@ -7,7 +7,7 @@ export default function Hero({ services }) {
       <div className="hero-content">
         <div className="hero-inner">
           <p className="eyebrow eyebrow-light hero-anim">
-            <span>01</span>Workforce Solutions
+            <span>01</span>{brand.tagline}
           </p>
           <h1 id="hero-title" className="hero-title hero-anim">
             Tenaga Kerja Tepat.

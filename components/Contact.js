@@ -33,23 +33,21 @@ export default function Contact({ services }) {
                 ))}
               </dl>
             )}
-            {officeMap && (
-              <figure className="contact-map">
-                <iframe
-                  src={officeMap.embed}
-                  title={`Peta lokasi kantor ${brand.name}`}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                />
-                <figcaption>
-                  <a href={officeMap.link} target="_blank" rel="noopener noreferrer" className="text-link">
-                    <Pin />
-                    Buka di Google Maps
-                  </a>
-                </figcaption>
-              </figure>
-            )}
+            <figure className="contact-map">
+              <iframe
+                src={officeMap.embed}
+                title={`Peta lokasi kantor ${brand.name}`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <figcaption>
+                <a href={officeMap.link} target="_blank" rel="noopener noreferrer" className="text-link">
+                  <Pin />
+                  Buka di Google Maps
+                </a>
+              </figcaption>
+            </figure>
           </div>
 
           <ContactForm services={services} whatsapp={whatsapp} />

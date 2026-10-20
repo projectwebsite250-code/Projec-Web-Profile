@@ -60,9 +60,9 @@ export default function Navbar({ nav }) {
 
         <nav aria-label="Navigasi utama" className="nav-desktop">
           <ul>
-            {nav.map(({ id, label, href }) => (
+            {nav.map(({ id, label }) => (
               <li key={id}>
-                <Link href={href ?? `/#${id}`} aria-current={active === id ? "true" : undefined}>{label}</Link>
+                <Link href={`/#${id}`} aria-current={active === id ? "true" : undefined}>{label}</Link>
               </li>
             ))}
           </ul>
@@ -84,9 +84,9 @@ export default function Navbar({ nav }) {
 
       <nav id="menu-mobile" aria-label="Navigasi mobile" className="nav-mobile" hidden={!open}>
         <ul>
-          {nav.map(({ id, label, href }, i) => (
+          {nav.map(({ id, label }, i) => (
             <li key={id}>
-              <Link href={href ?? `/#${id}`} onClick={close} aria-current={active === id ? "true" : undefined}>
+              <Link href={`/#${id}`} onClick={close} aria-current={active === id ? "true" : undefined}>
                 <span>{String(i + 1).padStart(2, "0")}</span>{label}
               </Link>
             </li>

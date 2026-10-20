@@ -298,7 +298,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .project { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .project .photo { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius); margin-bottom: 8px; }
 .project:hover .photo img { transform: scale(1.04); }
-.project-badge { padding: 4px 12px; border: 1px dashed var(--navy); border-radius: 999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); }
 .project-meta { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy); }
 .project-client { font-size: 0.875rem; font-weight: 600; }
 .project > p:last-child { font-size: 0.9375rem; }

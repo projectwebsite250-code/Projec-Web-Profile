@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { brand, contactHint } from "@/lib/content";
-import { MAX_MESSAGES, MAX_USER_CHARS } from "@/lib/chat";
+import { MAX_ASSISTANT_CHARS, MAX_MESSAGES, MAX_USER_CHARS } from "@/lib/chat";
 
 const greeting = {
   role: "assistant",
@@ -67,10 +67,12 @@ export default function ChatBot() {
     let reply = "";
     try {
       // Sapaan pembuka tidak dikirim karena API mewajibkan pesan pertama dari user.
+      // Jawaban panjang dipotong agar riwayat tidak ditolak API dan chat tidak macet.
+      const sent = history.slice(1).slice(-(MAX_MESSAGES - 1)).map((m) => ({ ...m, content: m.content.slice(0, MAX_ASSISTANT_CHARS) }));
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history.slice(1).slice(-(MAX_MESSAGES - 1)) }),
+        body: JSON.stringify({ messages: sent }),
       });
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
       const reader = res.body.getReader();

@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+// ".js" agar middleware.test.mjs bisa mengimpornya langsung di Node (paket next tidak punya "exports").
+import { NextResponse } from "next/server.js";
 
 // Tautan dari ChatGPT menambahkan ?utm_source=chatgpt.com; buang hanya itu agar URL tetap bersih.
 export function middleware(request) {
