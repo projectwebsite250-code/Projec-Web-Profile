@@ -103,7 +103,8 @@ export default function ChatBot() {
           <ol ref={logRef} className="chat-log" aria-live="polite">
             {messages.map((m, i) => (
               <li key={i} className={`chat-msg chat-${m.role}`}>
-                {m.content || <span className="chat-typing" aria-label="Sedang mengetik">•••</span>}
+                {/* Model menulis Markdown: "* "/"- " jadi "• ", "#" judul dibuang, indeks ganjil hasil split = isi **tebal** */}
+                {m.content ? m.content.replace(/^\s*[*-] /gm, "• ").replace(/^#+ /gm, "").split(/\*\*(.+?)\*\*/g).map((part, j) => (j % 2 ? <strong key={j}>{part}</strong> : part)) : <span className="chat-typing" aria-label="Sedang mengetik">•••</span>}
               </li>
             ))}
           </ol>
