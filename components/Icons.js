@@ -41,6 +41,15 @@ export function ServiceIcon({ name }) {
   return <svg {...base}>{paths[name]}</svg>;
 }
 
+export function Pin() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <path d="M8 14.5s4.5-4.2 4.5-7.8a4.5 4.5 0 0 0-9 0c0 3.6 4.5 7.8 4.5 7.8Z" />
+      <circle cx="8" cy="6.5" r="1.6" />
+    </svg>
+  );
+}
+
 export function Arrow() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">

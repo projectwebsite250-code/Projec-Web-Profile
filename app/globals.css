@@ -337,6 +337,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .contact-info div { padding: 18px 0; border-top: 1px solid var(--line-dark); }
 .contact-info dt { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
 .contact-info dd { color: var(--white); }
+.contact-map { margin: 32px 0 0; }
+.contact-map iframe { display: block; width: 100%; aspect-ratio: 4 / 3; max-height: 420px; border: 0; border-radius: var(--radius); background: var(--navy-2); }
+.contact-map figcaption { margin-top: 16px; }
+.contact-map .text-link { color: var(--white); }
+.contact-map .text-link svg { color: var(--gold); }
 
 .form { background: var(--white); color: var(--text); border-radius: var(--radius); padding: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; gap: 20px; }
 .form .h4 { color: var(--navy); margin-bottom: 4px; }
