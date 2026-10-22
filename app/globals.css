@@ -408,10 +408,39 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .js .why-list .reveal > span::after { transform: scaleX(0); transform-origin: left; transition: transform 640ms var(--ease) 240ms; }
 .js .why-list .is-visible > span::after { transform: scaleX(1); }
 
-/* Foto hero: zoom-out perlahan saat halaman dibuka */
-.hero-media .photo img { animation: settle 1800ms var(--ease) both; }
+/* Slider hero: crossfade antar foto, foto aktif zoom perlahan (Ken Burns) */
+.hero-slider { position: absolute; inset: 0; }
+.hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1200ms ease-in-out; }
+.hero-slide.is-active { opacity: 1; }
+.hero-slide .photo { position: absolute; inset: 0; }
+.hero-slide.is-active .photo img { animation: kenburns 6500ms linear both; }
 .hero-caption { animation: slide-in 640ms var(--ease) 600ms both; }
-@keyframes settle { from { transform: scale(1.08); } }
+.hero-dots { position: absolute; right: 20px; bottom: 18px; z-index: 1; display: flex; gap: 8px; }
+.hero-dots button { position: relative; width: 28px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; }
+.hero-dots button::before, .hero-dots button::after { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: rgba(255, 255, 255, 0.4); }
+.hero-dots button::after { background: var(--gold); transform: scaleX(0); transform-origin: left; }
+.hero-dots button[aria-current]::after { animation: progress 5000ms linear both; }
+.hero-dots button.is-paused[aria-current]::after { animation-play-state: paused; }
+@keyframes kenburns { from { transform: scale(1.12) translate(1%, 1%); } to { transform: scale(1); } }
+@keyframes progress { to { transform: scaleX(1); } }
+
+/* Strip foto berjalan */
+.strip { overflow: hidden; padding: clamp(40px, 6vw, 72px) 0; background: var(--navy); }
+.strip-track { display: flex; width: max-content; animation: marquee 50s linear infinite; }
+.strip:hover .strip-track { animation-play-state: paused; }
+.strip-set { display: flex; gap: 20px; padding-right: 20px; }
+.strip-set li { position: relative; width: clamp(240px, 26vw, 360px); }
+.strip-set .photo { aspect-ratio: 4 / 3; border-radius: var(--radius); }
+.strip-set li:hover .photo img { transform: scale(1.06); }
+.strip-set span {
+  position: absolute; left: 0; bottom: 0; padding: 10px 14px; background: var(--navy); color: var(--on-dark);
+  font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; border-top: 1px solid var(--gold);
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Foto di dalam blok reveal terbuka seperti tirai */
+.js .reveal .photo { clip-path: inset(0 0 100% 0); transition: clip-path 900ms var(--ease) 120ms; }
+.js .reveal.is-visible .photo { clip-path: inset(0); }
 @keyframes slide-in { from { opacity: 0; transform: translateX(-16px); } }
 
 /* Chat: panel & pesan masuk halus, titik mengetik berdenyut, tombol memberi isyarat dua kali */
@@ -485,5 +514,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
   .js .reveal, .js .timeline.reveal li { opacity: 1; transform: none; }
+  .js .reveal .photo { clip-path: none; }
+  .strip-track { animation: none; }
+  .strip { overflow-x: auto; }
   .js .why-list .reveal > span::after { transform: none; }
 }

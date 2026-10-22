@@ -1,4 +1,4 @@
-import Photo from "./Photo";
+import HeroSlider from "./HeroSlider";
 import { brand, images } from "@/lib/content";
 
 export default function Hero({ services }) {
@@ -36,8 +36,7 @@ export default function Hero({ services }) {
       </div>
 
       <div className="hero-media">
-        <Photo image={images.hero} priority sizes="(max-width: 960px) 100vw, 42vw" />
-        <p className="hero-caption">Penyediaan tenaga kerja — bisnis & industri</p>
+        <HeroSlider slides={[images.hero, ...services.filter((s) => s.image).map((s) => s.image)]} />
       </div>
     </section>
   );
