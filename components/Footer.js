@@ -42,7 +42,7 @@ export default function Footer({ nav, services }) {
       </div>
 
       <div className="container footer-bottom">
-        <p>© {new Date().getFullYear()} {brand.name}. Seluruh hak dilindungi.</p>
+        <p>© 2019 {brand.name}. Seluruh hak dilindungi.</p>
         <a href="#konten">Kembali ke atas ↑</a>
       </div>
     </footer>
