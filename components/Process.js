@@ -3,7 +3,7 @@ import { process } from "@/lib/content";
 
 export default function Process() {
   return (
-    <section id="proses" className="section section-off" aria-labelledby="process-title">
+    <section id="proses" className="section" aria-labelledby="process-title">
       <div className="container">
         <Reveal className="section-head">
           <div>

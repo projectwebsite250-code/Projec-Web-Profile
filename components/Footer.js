@@ -41,6 +41,8 @@ export default function Footer({ nav, services, contact }) {
         )}
       </div>
 
+      <p className="footer-mark" aria-hidden="true">{brand.name.replace(/^PT /, "")}</p>
+
       <div className="container footer-bottom">
         <p>© 2019 {brand.name}. Seluruh hak dilindungi.</p>
         <a href="#konten">Kembali ke atas ↑</a>

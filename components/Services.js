@@ -4,7 +4,7 @@ import { Arrow, ServiceIcon } from "./Icons";
 
 export default function Services({ services }) {
   return (
-    <section id="layanan" className="section section-dark" aria-labelledby="services-title">
+    <section id="layanan" className="section section-alt" aria-labelledby="services-title">
       <div className="container">
         <Reveal className="section-head">
           <div>
@@ -21,7 +21,7 @@ export default function Services({ services }) {
             <Reveal as="article" key={s.id} id={`layanan-${s.id}`} className={`service${s.image ? "" : " service-plain"}`} delay={(i % 2) * 120}>
               {s.image && (
                 <div className="service-media">
-                  <Photo image={s.image} sizes="(max-width: 640px) 100vw, 50vw" />
+                  <Photo image={s.image} sizes="(max-width: 960px) 100vw, 60vw" />
                 </div>
               )}
               <div className="service-body">

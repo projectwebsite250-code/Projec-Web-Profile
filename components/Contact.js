@@ -18,7 +18,7 @@ export default function Contact({ services, contact, whatsapp }) {
         </Reveal>
       </div>
 
-      <div className="section section-off">
+      <div className="section">
         <div className="container contact">
           <div className="contact-info">
             <p>
