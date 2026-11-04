@@ -8,7 +8,7 @@ export default function Footer({ nav, services }) {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Link href="/#beranda" className="wordmark">
-            <Image src="/images/logo.png" alt="" width={52} height={72} />
+            <Image src="/images/logo.png" alt="" width={198} height={72} />
             <div>
               {brand.name}
               <span>{brand.tagline}</span>

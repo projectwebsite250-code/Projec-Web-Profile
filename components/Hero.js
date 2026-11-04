@@ -6,7 +6,7 @@ export default function Hero({ services }) {
     <section id="beranda" className="hero" aria-labelledby="hero-title">
       <div className="hero-content">
         <div className="hero-inner">
-          <p className="eyebrow eyebrow-light hero-anim">
+          <p className="eyebrow hero-anim">
             <span>01</span>{brand.tagline}
           </p>
           <h1 id="hero-title" className="hero-title hero-anim">

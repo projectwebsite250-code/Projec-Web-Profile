@@ -51,7 +51,7 @@ export default function Navbar({ nav }) {
     <header className={`site-header${scrolled ? " is-scrolled" : ""}${open ? " is-open" : ""}`}>
       <div className="container nav-bar">
         <Link href="/#beranda" className="wordmark" onClick={close}>
-          <Image src="/images/logo.png" alt="" width={52} height={72} priority />
+          <Image src="/images/logo.png" alt="" width={143} height={52} priority />
           <div>
             {brand.name}
             <span>{brand.tagline}</span>
