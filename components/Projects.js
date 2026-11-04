@@ -5,7 +5,7 @@ export default function Projects({ projects }) {
   if (!projects.length) return null;
 
   return (
-    <section id="portofolio" className="section section-off" aria-labelledby="projects-title">
+    <section id="portofolio" className="section section-alt" aria-labelledby="projects-title">
       <div className="container">
         <Reveal className="section-head">
           <div>

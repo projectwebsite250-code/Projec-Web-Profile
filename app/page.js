@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Ticker from "@/components/Ticker";
 import PhotoStrip from "@/components/PhotoStrip";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
@@ -24,9 +25,10 @@ export default async function Home() {
       <Navbar nav={nav} />
       <main id="konten">
         <Hero services={services} />
+        <Ticker services={services} />
         <About profile={profile} />
-        <PhotoStrip photos={[images.about, ...services.filter((s) => s.image).map((s) => s.image), images.hero]} />
         <Services services={services} />
+        <PhotoStrip photos={[images.about, ...services.filter((s) => s.image).map((s) => s.image), images.hero]} />
         <Projects projects={projects} />
         <Process />
         <WhyUs />

@@ -93,7 +93,7 @@ export default function ContactForm({ services, whatsapp }) {
         <textarea id="f-pesan" name="pesan" rows={4} maxLength={LIMITS.pesan} placeholder="Contoh: lokasi, jumlah tenaga kerja, perkiraan jadwal" required />
       </div>
 
-      <button type="submit" className="btn btn-navy" disabled={status === "sending"}>
+      <button type="submit" className="btn btn-gold" disabled={status === "sending"}>
         {whatsapp ? "Kirim & buka WhatsApp" : "Kirim"}
       </button>
 
