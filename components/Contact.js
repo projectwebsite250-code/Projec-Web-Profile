@@ -14,7 +14,7 @@ export default function Contact({ services, contact, whatsapp }) {
             <br />
             Tenaga Kerja Anda.
           </h2>
-          <a href="#formulir" className="btn btn-navy">Hubungi Kami</a>
+          <a href="#formulir" className="btn btn-dark">Hubungi Kami</a>
         </Reveal>
       </div>
 

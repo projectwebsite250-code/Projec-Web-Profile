@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-// Gambar dengan fallback: bila file tidak ada atau gagal dimuat, tampilkan panel navy berlabel.
+// Gambar dengan fallback: bila file tidak ada atau gagal dimuat, tampilkan panel gelap berlabel.
 export default function Photo({ image, sizes = "100vw", priority = false, position = "center", className = "" }) {
   const ref = useRef(null);
   const [failed, setFailed] = useState(!image?.src);

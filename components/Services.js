@@ -4,7 +4,7 @@ import { Arrow, ServiceIcon } from "./Icons";
 
 export default function Services({ services }) {
   return (
-    <section id="layanan" className="section section-navy" aria-labelledby="services-title">
+    <section id="layanan" className="section section-dark" aria-labelledby="services-title">
       <div className="container">
         <Reveal className="section-head">
           <div>

@@ -122,7 +122,7 @@ export default function ChatBot({ contactHint }) {
               placeholder="Tulis pertanyaan Anda…"
               aria-label="Pesan"
             />
-            <button type="submit" className="btn btn-navy" disabled={busy || !input.trim()}>Kirim</button>
+            <button type="submit" className="btn btn-dark" disabled={busy || !input.trim()}>Kirim</button>
           </form>
           <p className="chat-note">Dijawab otomatis oleh AI. Percakapan disimpan untuk evaluasi layanan, jadi jangan menulis data pribadi. Untuk penawaran resmi, gunakan {contactHint}.</p>
         </section>
