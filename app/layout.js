@@ -1,8 +1,8 @@
-import { Manrope, Inter } from "next/font/google";
+import { Archivo, Inter } from "next/font/google";
 import { brand } from "@/lib/content";
 import "./globals.css";
 
-const heading = Manrope({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-heading" });
+const heading = Archivo({ subsets: ["latin"], variable: "--font-heading" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata = {

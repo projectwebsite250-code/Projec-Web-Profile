@@ -26,7 +26,7 @@ export default function HeroSlider({ slides }) {
     >
       {slides.map((s, i) => (
         <div key={s.src} className={`hero-slide${i === active ? " is-active" : ""}`} aria-hidden={i !== active}>
-          <Photo image={s} priority={i === 0} sizes="(max-width: 960px) 100vw, 42vw" />
+          <Photo image={s} priority={i === 0} sizes="(max-width: 960px) 100vw, 45vw" />
         </div>
       ))}
 
