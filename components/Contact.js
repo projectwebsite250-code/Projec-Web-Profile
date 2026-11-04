@@ -1,9 +1,9 @@
 import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
 import { Pin } from "./Icons";
-import { brand, contact, officeMap, whatsapp } from "@/lib/content";
+import { brand, officeMap } from "@/lib/content";
 
-export default function Contact({ services }) {
+export default function Contact({ services, contact, whatsapp }) {
   return (
     <section id="kontak" className="section section-off" aria-labelledby="contact-title">
       <div className="container">

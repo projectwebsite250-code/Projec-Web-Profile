@@ -12,7 +12,7 @@ Knowledge base tambahan untuk chatbot (/api/chat). Seluruh isi file ini, kecuali
 Bisa. Setiap kerja sama diawali konsultasi kebutuhan untuk memahami konteks bisnis, lokasi, dan tujuan operasional klien.
 
 ### Apakah beberapa jenis tenaga kerja bisa digabung dalam satu kerja sama?
-Bisa. Driver, security, cleaning service, tenaga borongan, dan tenaga kerja tetap dapat dikombinasikan sesuai kebutuhan.
+Bisa. Driver, security, cleaning service, dan tenaga borongan dapat dikombinasikan sesuai kebutuhan.
 
 ### Apakah tersedia tenaga kerja untuk proyek jangka pendek?
 Tersedia melalui layanan Tenaga Borongan & Proyek, untuk pekerjaan berbasis proyek atau volume tertentu dengan jangka waktu yang disepakati, misalnya bongkar muat atau kebutuhan musiman.
