@@ -8,7 +8,7 @@ import { isValidHistory } from "@/lib/chat";
 import { checkReply, safeReply } from "@/lib/guard";
 
 // Override per deployment (mis. uji model lain di preview: vercel deploy -e NVIDIA_CHAT_MODEL=...).
-const model = process.env.NVIDIA_CHAT_MODEL || "mistralai/mistral-large-4-1t-a52b";
+const model = process.env.NVIDIA_CHAT_MODEL || "nvidia/nemotron-3-ultra-550b-a55b";
 
 // Dibaca sekali saat modul dimuat; perubahan file berlaku setelah restart/deploy ulang.
 // Komentar <!-- --> berisi petunjuk penulisan, bukan pengetahuan untuk model.
