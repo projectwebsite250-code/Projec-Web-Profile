@@ -1,14 +1,14 @@
 import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
 import { Pin } from "./Icons";
-import { brand, contact, officeMap, whatsapp } from "@/lib/content";
+import { brand, officeMap } from "@/lib/content";
 
-export default function Contact({ services }) {
+export default function Contact({ services, contact, whatsapp }) {
   return (
-    <section id="kontak" className="section section-navy" aria-labelledby="contact-title">
+    <section id="kontak" className="section section-off" aria-labelledby="contact-title">
       <div className="container">
         <Reveal className="cta">
-          <p className="eyebrow eyebrow-light"><span>07</span>Kontak</p>
+          <p className="eyebrow"><span>07</span>Kontak</p>
           <h2 id="contact-title" className="display">
             Diskusikan Kebutuhan
             <br />

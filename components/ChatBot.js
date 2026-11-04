@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { brand, contactHint } from "@/lib/content";
+import { brand } from "@/lib/content";
 import { MAX_ASSISTANT_CHARS, MAX_MESSAGES, MAX_USER_CHARS } from "@/lib/chat";
 
 const greeting = {
   role: "assistant",
   content: `Halo! Saya asisten virtual ${brand.name}. Ada yang bisa saya bantu terkait kebutuhan tenaga kerja Anda?`,
 };
-const errorText = `Maaf, chat sedang tidak tersedia. Silakan hubungi kami melalui ${contactHint}.`;
-
-export default function ChatBot() {
+export default function ChatBot({ contactHint }) {
+  const errorText = `Maaf, chat sedang tidak tersedia. Silakan hubungi kami melalui ${contactHint}.`;
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([greeting]);
   const [input, setInput] = useState("");
@@ -18,6 +17,8 @@ export default function ChatBot() {
   const logRef = useRef(null);
   const inputRef = useRef(null);
   const chatRef = useRef(null);
+  // Mengelompokkan pesan satu percakapan di tabel chat_logs; bukan identitas pengunjung.
+  const sessionRef = useRef(null);
 
   useEffect(() => {
     logRef.current?.scrollTo(0, logRef.current.scrollHeight);
@@ -65,6 +66,7 @@ export default function ChatBot() {
     setBusy(true);
 
     let reply = "";
+    sessionRef.current ??= crypto.randomUUID();
     try {
       // Sapaan pembuka tidak dikirim karena API mewajibkan pesan pertama dari user.
       // Jawaban panjang dipotong agar riwayat tidak ditolak API dan chat tidak macet.
@@ -72,7 +74,7 @@ export default function ChatBot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: sent }),
+        body: JSON.stringify({ messages: sent, sessionId: sessionRef.current }),
       });
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
       const reader = res.body.getReader();
@@ -122,7 +124,7 @@ export default function ChatBot() {
             />
             <button type="submit" className="btn btn-navy" disabled={busy || !input.trim()}>Kirim</button>
           </form>
-          <p className="chat-note">Dijawab otomatis oleh AI. Untuk penawaran resmi, gunakan {contactHint}.</p>
+          <p className="chat-note">Dijawab otomatis oleh AI. Percakapan disimpan untuk evaluasi layanan, jadi jangan menulis data pribadi. Untuk penawaran resmi, gunakan {contactHint}.</p>
         </section>
       )}
 

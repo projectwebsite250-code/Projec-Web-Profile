@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { brand, contact } from "@/lib/content";
+import { brand } from "@/lib/content";
 
-export default function Footer({ nav, services }) {
+export default function Footer({ nav, services, contact }) {
   return (
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
           <Link href="/#beranda" className="wordmark">
-            <Image src="/images/logo.png" alt="" width={52} height={72} />
+            <Image src="/images/logo.png" alt="" width={198} height={72} />
             <div>
               {brand.name}
               <span>{brand.tagline}</span>

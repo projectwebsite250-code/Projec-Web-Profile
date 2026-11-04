@@ -9,9 +9,14 @@ import WhyUs from "@/components/WhyUs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ChatBot from "@/components/ChatBot";
-import { nav as allNav, services, projects, images } from "@/lib/content";
+import { nav as allNav, projects, images } from "@/lib/content";
+import { getContent } from "@/lib/cms";
 
-export default function Home() {
+// Isi dari database diperbarui paling lambat 5 menit setelah diubah di dashboard.
+export const revalidate = 300;
+
+export default async function Home() {
+  const { services, contact, profile, whatsapp, contactHint } = await getContent();
   const nav = projects.length ? allNav : allNav.filter((n) => n.id !== "portofolio");
 
   return (
@@ -19,16 +24,16 @@ export default function Home() {
       <Navbar nav={nav} />
       <main id="konten">
         <Hero services={services} />
-        <About />
+        <About profile={profile} />
         <PhotoStrip photos={[images.about, ...services.filter((s) => s.image).map((s) => s.image), images.hero]} />
         <Services services={services} />
         <Projects projects={projects} />
         <Process />
         <WhyUs />
-        <Contact services={services} />
+        <Contact services={services} contact={contact} whatsapp={whatsapp} />
       </main>
-      <Footer nav={nav} services={services} />
-      <ChatBot />
+      <Footer nav={nav} services={services} contact={contact} />
+      <ChatBot contactHint={contactHint} />
     </>
   );
 }

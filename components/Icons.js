@@ -28,13 +28,6 @@ const paths = {
       <path d="M4 21h24v3H4zM13 11.5V8h6v3.5" />
     </>
   ),
-  tetap: (
-    <>
-      <rect x="6" y="5" width="20" height="24" rx="2" />
-      <circle cx="16" cy="14" r="3.5" />
-      <path d="M10.5 24c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5M13 5V3h6v2" />
-    </>
-  ),
 };
 
 export function ServiceIcon({ name }) {

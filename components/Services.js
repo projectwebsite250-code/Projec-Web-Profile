@@ -9,7 +9,7 @@ export default function Services({ services }) {
         <Reveal className="section-head">
           <div>
             <p className="eyebrow"><span>03</span>Layanan</p>
-            <h2 id="services-title" className="h2">Lima kategori tenaga kerja untuk kebutuhan yang berbeda.</h2>
+            <h2 id="services-title" className="h2">Empat kategori tenaga kerja untuk kebutuhan yang berbeda.</h2>
           </div>
           <p className="section-intro">
             Pilih satu kategori atau kombinasikan beberapa layanan sesuai skala dan karakter operasional perusahaan Anda.

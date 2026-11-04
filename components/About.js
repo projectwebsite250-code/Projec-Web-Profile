@@ -1,9 +1,9 @@
 import Photo from "./Photo";
 import Reveal from "./Reveal";
 import { Arrow } from "./Icons";
-import { images, profile } from "@/lib/content";
+import { images } from "@/lib/content";
 
-export default function About() {
+export default function About({ profile }) {
   return (
     <section id="tentang" className="section section-off" aria-labelledby="about-title">
       <div className="container">
@@ -17,8 +17,8 @@ export default function About() {
 
           <Reveal className="split-body" delay={120}>
             <p className="lead">
-              Kami membantu perusahaan memenuhi kebutuhan tenaga kerja untuk posisi driver, security, cleaning service, pekerjaan borongan,
-              hingga tenaga kerja tetap.
+              Kami membantu perusahaan memenuhi kebutuhan tenaga kerja untuk posisi driver, security, cleaning service,
+              hingga pekerjaan borongan.
             </p>
             <p>
               Setiap kebutuhan dibahas bersama klien: lingkup pekerjaan, lokasi, jadwal, dan kualifikasi yang diharapkan.
