@@ -5,17 +5,18 @@ import { images } from "@/lib/content";
 
 export default function About({ profile }) {
   return (
-    <section id="tentang" className="section section-off" aria-labelledby="about-title">
+    <section id="tentang" className="section" aria-labelledby="about-title">
       <div className="container">
-        <div className="split">
-          <Reveal className="split-head">
-            <p className="eyebrow"><span>02</span>Tentang Kami</p>
+        <div className="about">
+          <Reveal className="about-media">
+            <Photo image={images.about} sizes="(max-width: 960px) 100vw, 45vw" />
+          </Reveal>
+
+          <Reveal className="about-body" delay={120}>
+            <p className="eyebrow">Tentang Kami</p>
             <h2 id="about-title" className="h2">
               Memahami operasional Anda lebih dulu, lalu menyiapkan orang yang tepat.
             </h2>
-          </Reveal>
-
-          <Reveal className="split-body" delay={120}>
             <p className="lead">
               Kami membantu perusahaan memenuhi kebutuhan tenaga kerja untuk posisi driver, security, cleaning service,
               hingga pekerjaan borongan.
@@ -25,27 +26,22 @@ export default function About({ profile }) {
               Dari sana, proses koordinasi dan persiapan tenaga kerja dijalankan secara terstruktur agar penempatan
               berjalan sesuai kesepakatan.
             </p>
-
-            {profile.length > 0 && (
-              <dl className="facts">
-                {profile.map((p) => (
-                  <div key={p.label}>
-                    <dt>{p.label}</dt>
-                    <dd>{p.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-
             <a href="#proses" className="text-link">
               Lihat cara kami bekerja <Arrow />
             </a>
           </Reveal>
         </div>
 
-        <Reveal className="about-media">
-          <Photo image={images.about} sizes="(max-width: 960px) 100vw, 75vw" />
-        </Reveal>
+        {profile.length > 0 && (
+          <Reveal as="dl" className="facts">
+            {profile.map((p) => (
+              <div key={p.label}>
+                <dt>{p.label}</dt>
+                <dd>{p.value}</dd>
+              </div>
+            ))}
+          </Reveal>
+        )}
       </div>
     </section>
   );

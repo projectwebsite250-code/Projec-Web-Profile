@@ -9,7 +9,7 @@ export default function Projects({ projects }) {
       <div className="container">
         <Reveal className="section-head">
           <div>
-            <p className="eyebrow"><span>04</span>Portofolio</p>
+            <p className="eyebrow">Portofolio</p>
             <h2 id="projects-title" className="h2">Portofolio penempatan tenaga kerja.</h2>
           </div>
           <p className="section-intro">Beberapa penempatan tenaga kerja yang telah kami kerjakan bersama klien.</p>

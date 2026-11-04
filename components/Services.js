@@ -4,11 +4,11 @@ import { Arrow, ServiceIcon } from "./Icons";
 
 export default function Services({ services }) {
   return (
-    <section id="layanan" className="section" aria-labelledby="services-title">
+    <section id="layanan" className="section section-navy" aria-labelledby="services-title">
       <div className="container">
         <Reveal className="section-head">
           <div>
-            <p className="eyebrow"><span>03</span>Layanan</p>
+            <p className="eyebrow">Layanan</p>
             <h2 id="services-title" className="h2">Empat kategori tenaga kerja untuk kebutuhan yang berbeda.</h2>
           </div>
           <p className="section-intro">
@@ -18,10 +18,10 @@ export default function Services({ services }) {
 
         <div className="services">
           {services.map((s, i) => (
-            <Reveal as="article" key={s.id} id={`layanan-${s.id}`} className={`service service-${s.id}`} delay={(i % 2) * 120}>
+            <Reveal as="article" key={s.id} id={`layanan-${s.id}`} className={`service${s.image ? "" : " service-plain"}`} delay={(i % 2) * 120}>
               {s.image && (
                 <div className="service-media">
-                  <Photo image={s.image} sizes="(max-width: 960px) 100vw, 50vw" />
+                  <Photo image={s.image} sizes="(max-width: 640px) 100vw, 50vw" />
                 </div>
               )}
               <div className="service-body">
