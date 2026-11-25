@@ -35,7 +35,7 @@ export default function Navbar({ nav }) {
     if (!open) return;
     document.body.style.overflow = "hidden";
     const onKey = (e) => e.key === "Escape" && setOpen(false);
-    const onResize = () => window.innerWidth > 960 && setOpen(false);
+    const onResize = () => window.innerWidth > 1080 && setOpen(false);
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {

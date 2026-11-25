@@ -138,6 +138,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .nav-desktop { margin-left: auto; }
 .nav-desktop ul { display: flex; gap: 32px; }
+.nav-desktop a, .site-header .wordmark { white-space: nowrap; }
 .nav-desktop a { position: relative; display: block; padding: 8px 0; font-size: 1rem; font-weight: 500; color: var(--text); transition: color var(--fast); }
 .nav-desktop a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--accent);
@@ -426,11 +427,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .service-media { min-height: 0; aspect-ratio: 16 / 10; }
 }
 
+/* Enam menu + logo butuh ruang: tombol Konsultasi lalu menu desktop disembunyikan bertahap */
+@media (max-width: 1260px) { .btn-nav { display: none; } }
+@media (max-width: 1080px) {
+  .nav-desktop { display: none; }
+  .nav-toggle { display: flex; }
+}
+
 @media (max-width: 960px) {
   :root { --header-h: 68px; }
   .wordmark img { height: 44px; }
-  .nav-desktop, .btn-nav { display: none; }
-  .nav-toggle { display: flex; }
 
   .about-grid, .contact { grid-template-columns: minmax(0, 1fr); }
   .hero-photo::after { background: rgba(15, 18, 22, 0.78); }
