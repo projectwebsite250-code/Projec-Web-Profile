@@ -2,18 +2,29 @@ import Photo from "./Photo";
 import Reveal from "./Reveal";
 
 export default function Projects({ projects }) {
-  if (!projects.length) return null;
+  const empty = !projects.length;
 
   return (
     <section id="portofolio" className="section section-alt" aria-labelledby="projects-title">
       <div className="container">
         <Reveal className="section-head">
-          <div>
-            <p className="eyebrow">Portofolio</p>
-            <h2 id="projects-title" className="h2">Portofolio penempatan tenaga kerja.</h2>
-          </div>
-          <p className="section-intro">Beberapa penempatan tenaga kerja yang telah kami kerjakan bersama klien.</p>
+          <p className="eyebrow">Portofolio</p>
+          <h2 id="projects-title" className="h2">Portofolio penempatan tenaga kerja.</h2>
+          <p className="section-intro">
+            {empty ? "Portofolio kami sedang disiapkan." : "Beberapa penempatan tenaga kerja yang telah kami kerjakan bersama klien."}
+          </p>
         </Reveal>
+
+        {empty && (
+          <div className="projects" aria-hidden="true">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="project project-empty">
+                <div className="photo" />
+                <span /><span /><span />
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="projects">
           {projects.map((p, i) => (

@@ -7,19 +7,19 @@ insert into public.services (id, title, summary, points, image_src, image_alt, i
   ('driver', 'Driver',
    'Tenaga pengemudi untuk kendaraan operasional, distribusi, maupun kebutuhan transportasi perusahaan.',
    array['Kendaraan operasional', 'Distribusi & logistik', 'Antar-jemput karyawan'],
-   '/images/driver.jpg', 'Pengemudi memegang kemudi mobil', 'Driver profesional', 1),
+   '/images/driver.jpg', 'Pengemudi truk di kabin berbicara dengan petugas lapangan', 'Driver profesional', 1),
   ('security', 'Security',
    'Petugas keamanan untuk menjaga area kerja, fasilitas, dan aset bisnis sesuai kebutuhan lokasi.',
    array['Kantor & gedung', 'Area industri', 'Fasilitas komersial'],
-   '/images/security.jpg', 'Petugas keamanan berompi reflektif berpatroli', 'Petugas keamanan', 2),
+   '/images/security.jpg', 'Petugas keamanan berjaga di lobi gedung', 'Petugas keamanan', 2),
   ('cleaning', 'Cleaning Service',
    'Petugas kebersihan untuk menjaga area kerja, fasilitas, dan ruang publik tetap bersih, rapi, dan nyaman.',
    array['Kantor & gedung', 'Area produksi', 'Fasilitas umum'],
-   '/images/cleaning.jpg', 'Petugas kebersihan mengepel lantai koridor gedung', 'Cleaning service', 3),
+   '/images/cleaning.jpg', 'Petugas kebersihan membersihkan lantai dengan mesin', 'Cleaning service', 3),
   ('borongan', 'Tenaga Borongan & Proyek',
    'Tenaga kerja untuk pekerjaan berbasis proyek atau volume tertentu dengan jangka waktu yang disepakati.',
    array['Pekerjaan proyek', 'Bongkar muat', 'Kebutuhan musiman'],
-   null, null, null, 4)
+   '/images/borongan.jpg', 'Pekerja proyek mengoperasikan mesin pengaduk semen', 'Tenaga borongan', 4)
 on conflict (id) do update set
   title = excluded.title, summary = excluded.summary, points = excluded.points,
   image_src = excluded.image_src, image_alt = excluded.image_alt, image_label = excluded.image_label,

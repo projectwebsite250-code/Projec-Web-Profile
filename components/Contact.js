@@ -7,20 +7,20 @@ export default function Contact({ services, contact, whatsapp }) {
   return (
     <section id="kontak" aria-labelledby="contact-title">
       <div className="cta-band">
-        <Reveal className="container cta">
+        <Reveal className="container">
           <p className="eyebrow">Kontak</p>
           <h2 id="contact-title" className="display">
             Diskusikan Kebutuhan
             <br />
             Tenaga Kerja Anda.
           </h2>
-          <a href="#formulir" className="btn btn-dark">Hubungi Kami</a>
         </Reveal>
       </div>
 
       <div className="section">
         <div className="container contact">
           <div className="contact-info">
+            <h3 className="h3">Informasi perusahaan</h3>
             <p>
               Sampaikan kebutuhan Anda melalui formulir atau kanal kontak di bawah. Tim kami akan menindaklanjuti untuk
               membahas detailnya.
