@@ -1,25 +1,49 @@
 "use client";
 
-import { useState } from "react";
-import { LIMITS, OTHER_SERVICE, waLink } from "@/lib/inquiry";
+import { useEffect, useRef, useState } from "react";
+import { fieldError, LIMITS, OTHER_SERVICE, waLink } from "@/lib/inquiry";
 
 const messages = {
   idle: "Data Anda disimpan untuk ditindaklanjuti oleh tim kami.",
   sending: "Mengirim…",
   sent: "Terima kasih, permintaan Anda sudah kami terima.",
-  empty: "Semua kolom wajib diisi.",
+  invalid: "Periksa kembali kolom yang ditandai.",
 };
 
 export default function ContactForm({ services, whatsapp }) {
+  const formRef = useRef(null);
   const [status, setStatus] = useState("idle");
   const [errorText, setErrorText] = useState("");
+  const [errors, setErrors] = useState({});
   const [startedAt] = useState(() => Date.now());
+
+  const clearError = (name) => setErrors((prev) => ({ ...prev, [name]: "" }));
+
+  // Tautan "Tanyakan layanan ini" berada di luar formulir, jadi kliknya ditangkap di dokumen.
+  useEffect(() => {
+    const onClick = (e) => {
+      const id = e.target.closest?.("[data-service]")?.dataset.service;
+      if (!id) return;
+      formRef.current.elements.jenis.value = id;
+      clearError("jenis");
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     const { website, ...fields } = Object.fromEntries([...new FormData(form)].map(([k, v]) => [k, v.trim()]));
-    if (Object.values(fields).some((v) => !v)) return setStatus("empty");
+
+    const found = { jenis: fields.jenis ? "" : "Pilih jenis layanan." };
+    for (const key of Object.keys(LIMITS)) found[key] = fieldError(key, fields[key]);
+    setErrors(found);
+    const firstInvalid = [...form.elements].find((el) => found[el.name]);
+    if (firstInvalid) {
+      firstInvalid.focus();
+      return setStatus("invalid");
+    }
 
     // Dibuka langsung dari event submit agar tidak diblokir sebagai pop-up.
     if (whatsapp) {
@@ -48,11 +72,22 @@ export default function ContactForm({ services, whatsapp }) {
     setStatus("error");
   };
 
-  const isAlert = status === "empty" || status === "error";
+  const isAlert = status === "invalid" || status === "error";
+
+  const field = (name) => ({
+    id: `f-${name}`,
+    name,
+    maxLength: LIMITS[name],
+    required: true,
+    "aria-invalid": errors[name] ? true : undefined,
+    "aria-describedby": errors[name] ? `e-${name}` : undefined,
+    onChange: () => errors[name] && clearError(name),
+  });
+  const fieldNote = (name) => errors[name] && <p id={`e-${name}`} className="field-error">{errors[name]}</p>;
 
   return (
-    <form id="formulir" className="form" onSubmit={onSubmit}>
-      <h3 className="h4">Formulir permintaan informasi</h3>
+    <form ref={formRef} id="formulir" className="form" onSubmit={onSubmit} noValidate>
+      <h3 className="h3">Formulir permintaan informasi</h3>
 
       {/* Honeypot: tersembunyi dari pengunjung, biasanya hanya diisi bot. */}
       <input name="website" hidden tabIndex={-1} autoComplete="off" aria-hidden="true" />
@@ -60,41 +95,47 @@ export default function ContactForm({ services, whatsapp }) {
       <div className="field-row">
         <div className="field">
           <label htmlFor="f-nama">Nama</label>
-          <input id="f-nama" name="nama" autoComplete="name" maxLength={LIMITS.nama} required />
+          <input {...field("nama")} autoComplete="name" />
+          {fieldNote("nama")}
         </div>
         <div className="field">
           <label htmlFor="f-perusahaan">Nama perusahaan</label>
-          <input id="f-perusahaan" name="perusahaan" autoComplete="organization" maxLength={LIMITS.perusahaan} required />
+          <input {...field("perusahaan")} autoComplete="organization" />
+          {fieldNote("perusahaan")}
         </div>
       </div>
 
       <div className="field-row">
         <div className="field">
           <label htmlFor="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autoComplete="email" maxLength={LIMITS.email} required />
+          <input {...field("email")} type="email" autoComplete="email" />
+          {fieldNote("email")}
         </div>
         <div className="field">
-          <label htmlFor="f-telepon">Nomor telepon</label>
-          <input id="f-telepon" name="telepon" type="tel" autoComplete="tel" minLength={7} maxLength={LIMITS.telepon} required />
+          <label htmlFor="f-telepon">No. telepon / WhatsApp</label>
+          <input {...field("telepon")} type="tel" autoComplete="tel" />
+          {fieldNote("telepon")}
         </div>
       </div>
 
       <div className="field">
-        <label htmlFor="f-jenis">Jenis tenaga kerja yang dibutuhkan</label>
-        <select id="f-jenis" name="jenis" required defaultValue="">
-          <option value="" disabled>Pilih kategori</option>
+        <label htmlFor="f-jenis">Jenis layanan yang dibutuhkan</label>
+        <select {...field("jenis")} defaultValue="">
+          <option value="" disabled>Pilih layanan</option>
           {services.map((s) => <option key={s.id} value={s.id}>{s.title}</option>)}
           <option value={OTHER_SERVICE}>Kombinasi / lainnya</option>
         </select>
+        {fieldNote("jenis")}
       </div>
 
       <div className="field">
-        <label htmlFor="f-pesan">Deskripsi kebutuhan</label>
-        <textarea id="f-pesan" name="pesan" rows={4} maxLength={LIMITS.pesan} placeholder="Contoh: lokasi, jumlah tenaga kerja, perkiraan jadwal" required />
+        <label htmlFor="f-pesan">Pesan / kebutuhan</label>
+        <textarea {...field("pesan")} rows={4} placeholder="Contoh: lokasi, jumlah tenaga kerja, perkiraan jadwal" />
+        {fieldNote("pesan")}
       </div>
 
       <button type="submit" className="btn btn-gold" disabled={status === "sending"}>
-        {whatsapp ? "Kirim & buka WhatsApp" : "Kirim"}
+        {whatsapp ? "Kirim & buka WhatsApp" : "Kirim Pesan"}
       </button>
 
       <p className="form-note" role={isAlert ? "alert" : "status"}>
